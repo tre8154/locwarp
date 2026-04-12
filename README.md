@@ -333,6 +333,7 @@ locwarp/
 ## License
 
 本專案採用 **MIT License** 授權釋出 — 詳見 [LICENSE](LICENSE)。
+
 允許自由使用、修改、再散佈與商業利用,惟須保留原始著作權與授權聲明。
 
 ---
