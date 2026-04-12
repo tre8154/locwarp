@@ -32,6 +32,21 @@ const App: React.FC = () => {
   const [cooldown, setCooldown] = useState(0)
   const [cooldownEnabled, setCooldownEnabled] = useState(true)
   const [randomWalkRadius, setRandomWalkRadius] = useState(500)
+  const [toastMsg, setToastMsg] = useState<string | null>(null)
+
+  const showToast = useCallback((msg: string, ms = 2000) => {
+    setToastMsg(msg)
+    setTimeout(() => setToastMsg(null), ms)
+  }, [])
+
+  const handleRestore = useCallback(async () => {
+    try {
+      await sim.restore()
+      showToast('已清除虛擬定位')
+    } catch {
+      showToast('清除失敗')
+    }
+  }, [showToast])
   const [wpGenRadius, setWpGenRadius] = useState(300)
   const [wpGenCount, setWpGenCount] = useState(5)
 
@@ -271,7 +286,7 @@ const App: React.FC = () => {
           onStop={handleStop}
           onPause={sim.pause}
           onResume={sim.resume}
-          onRestore={sim.restore}
+          onRestore={handleRestore}
           onTeleport={handleTeleport}
           onNavigate={handleNavigate}
           bookmarks={bm.bookmarks.map(b => ({
@@ -521,7 +536,36 @@ const App: React.FC = () => {
           cooldown={cooldown}
           cooldownEnabled={cooldownEnabled}
           onToggleCooldown={handleToggleCooldown}
+          onRestore={handleRestore}
         />
+
+        {toastMsg && (
+          <div
+            style={{
+              position: 'fixed',
+              top: 70,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 10001,
+              background: 'rgba(40, 44, 60, 0.95)',
+              color: '#fff',
+              padding: '10px 20px',
+              borderRadius: 6,
+              fontSize: 13,
+              fontWeight: 500,
+              boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+              border: '1px solid rgba(108, 140, 255, 0.4)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4caf50" strokeWidth="2.5">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            {toastMsg}
+          </div>
+        )}
       </div>
     </div>
   )

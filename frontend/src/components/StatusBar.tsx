@@ -16,6 +16,7 @@ interface StatusBarProps {
   cooldown: number; // seconds remaining, 0 if inactive
   cooldownEnabled: boolean;
   onToggleCooldown: (enabled: boolean) => void;
+  onRestore?: () => void;
 }
 
 const modeLabels: Record<SimMode, string> = {
@@ -43,6 +44,7 @@ const StatusBar: React.FC<StatusBarProps> = ({
   cooldown,
   cooldownEnabled,
   onToggleCooldown,
+  onRestore,
 }) => {
   const [cooldownDisplay, setCooldownDisplay] = useState(cooldown);
 
@@ -160,6 +162,35 @@ const StatusBar: React.FC<StatusBarProps> = ({
         />
         <span style={{ opacity: cooldownEnabled ? 1 : 0.5 }}>冷卻{cooldownEnabled ? '啟用' : '關閉'}</span>
       </label>
+
+      {/* Restore button */}
+      {onRestore && (
+        <>
+          <div style={{ width: 1, height: 14, background: '#333' }} />
+          <button
+            onClick={onRestore}
+            title="清除 iPhone 上的虛擬定位,恢復真實 GPS"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              padding: '2px 8px',
+              fontSize: 12,
+              background: 'rgba(108, 140, 255, 0.15)',
+              border: '1px solid rgba(108, 140, 255, 0.4)',
+              color: '#6c8cff',
+              borderRadius: 4,
+              cursor: 'pointer',
+            }}
+          >
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 12a9 9 0 109-9" />
+              <polyline points="3,3 3,9 9,9" />
+            </svg>
+            一鍵還原
+          </button>
+        </>
+      )}
 
       {/* Cooldown timer */}
       {cooldownDisplay > 0 && (
