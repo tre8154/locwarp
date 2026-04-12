@@ -8,6 +8,11 @@
   <img src="frontend/build/icon.png" width="128" alt="LocWarp">
 </p>
 
+<p align="center">
+  <a href="#使用者端需求">📖 使用者端說明</a> ·
+  <a href="https://github.com/keezxc1223/locwarp/releases">⬇ 下載安裝檔</a>
+</p>
+
 ---
 
 ## 功能
