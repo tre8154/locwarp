@@ -281,24 +281,6 @@ locwarp/
 
 ---
 
-## 技術備忘
-
-- **Speed profile**:`config.resolve_speed_profile()` 統一解析 `(mode, speed_kmh, speed_min_kmh, speed_max_kmh)` → 有 range 時隨機抽,優先序 `range > 固定 > 模式預設`
-- **ETA tracker**:`EtaTracker` 在 `_move_along_route` 內每 tick 更新 `traveled`,提供 `progress / eta_seconds / distance_remaining`
-- **路徑解析**(打包後):backend 內偵測 `sys.frozen`,從 `resources/backend/locwarp-backend.exe` 反推 `resources/wifi-tunnel/wifi-tunnel.exe`
-- **執行期資料夾**:`~/.locwarp/`(bookmarks.json / settings.json / wifi_tunnel_info.json)
-
----
-
-## Roadmap
-
-- [ ] 速度**時段內**變化(目前僅每段路重抽)
-- [ ] 合併 backend + wifi_tunnel 到單一 Python 3.13 runtime(縮小安裝包)
-- [ ] 開機自啟 + 常駐 tray
-- [ ] 多裝置並行控制
-
----
-
 ## License
 
 本專案採用 **MIT License** 授權釋出 — 詳見 [LICENSE](LICENSE)。
