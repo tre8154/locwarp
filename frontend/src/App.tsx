@@ -154,7 +154,7 @@ const App: React.FC = () => {
       lat,
       lng,
       name: '',
-      category: bm.categories[0]?.name || '預設',
+      category: bm.categories[0]?.name || t('bm.default'),
     })
   }, [bm.categories])
 
@@ -346,7 +346,7 @@ const App: React.FC = () => {
             name: b.name,
             lat: b.lat,
             lng: b.lng,
-            category: bm.categories.find(c => c.id === b.category_id)?.name || '預設',
+            category: bm.categories.find(c => c.id === b.category_id)?.name || t('bm.default'),
           }))}
           bookmarkCategories={bm.categories.map(c => c.name)}
           onBookmarkClick={(b: any) => handleTeleport(b.lat, b.lng)}

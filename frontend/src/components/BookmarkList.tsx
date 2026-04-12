@@ -57,6 +57,9 @@ const BookmarkList: React.FC<BookmarkListProps> = ({
   onCategoryDelete,
 }) => {
   const t = useT();
+  // Backend may store the built-in default category as the Chinese '預設'.
+  // Translate at render time so EN users see "Default" without touching storage.
+  const displayCat = (name: string) => (name === '預設' ? t('bm.default') : name);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [newName, setNewName] = useState('');
@@ -188,7 +191,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({
           >
             {categories.map((cat) => (
               <option key={cat} value={cat}>
-                {cat}
+                {displayCat(cat)}
               </option>
             ))}
           </select>
@@ -242,7 +245,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({
                   flexShrink: 0,
                 }}
               />
-              <span style={{ flex: 1 }}>{cat}</span>
+              <span style={{ flex: 1 }}>{displayCat(cat)}</span>
               {cat !== 'Default' && (
                 <button
                   onClick={() => onCategoryDelete(cat)}
@@ -333,7 +336,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({
                 flexShrink: 0,
               }}
             />
-            <span>{cat}</span>
+            <span>{displayCat(cat)}</span>
             <span style={{ marginLeft: 'auto', opacity: 0.4, fontWeight: 400, fontSize: 10 }}>
               {bms.length}
             </span>
@@ -500,7 +503,7 @@ const BookmarkList: React.FC<BookmarkListProps> = ({
                           marginRight: 6,
                         }}
                       />
-                      {cat}
+                      {displayCat(cat)}
                     </div>
                   ))}
               </>
