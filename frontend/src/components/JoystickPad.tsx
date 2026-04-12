@@ -88,6 +88,94 @@ const JoystickPad: React.FC<JoystickPadProps> = ({
     onRelease();
   }, [onRelease]);
 
+  // ── WASD / arrow keyboard control ───────────────────
+  useEffect(() => {
+    const pressed = new Set<string>();
+    const KEY_DIR: Record<string, string> = {
+      w: 'up', arrowup: 'up',
+      s: 'down', arrowdown: 'down',
+      a: 'left', arrowleft: 'left',
+      d: 'right', arrowright: 'right',
+    };
+
+    // Map direction set → (compass deg, intensity)
+    const compute = () => {
+      const up = pressed.has('up');
+      const down = pressed.has('down');
+      const left = pressed.has('left');
+      const right = pressed.has('right');
+      if (!up && !down && !left && !right) return null;
+
+      let dx = 0, dy = 0;
+      if (up) dy += 1;
+      if (down) dy -= 1;
+      if (right) dx += 1;
+      if (left) dx -= 1;
+      if (dx === 0 && dy === 0) return null;
+
+      const rad = Math.atan2(dx, dy);
+      let deg = (rad * 180) / Math.PI;
+      if (deg < 0) deg += 360;
+      return { deg: Math.round(deg), dx, dy };
+    };
+
+    const update = () => {
+      const r = compute();
+      if (!r) {
+        setDragging(false);
+        setHandlePos({ x: 0, y: 0 });
+        onRelease();
+        return;
+      }
+      const intensity = 1;
+      setDragging(true);
+      onMove(r.deg, intensity);
+      // Move handle visually to reflect keyboard input
+      const len = Math.sqrt(r.dx * r.dx + r.dy * r.dy);
+      setHandlePos({
+        x: (r.dx / len) * MAX_DISTANCE,
+        y: -(r.dy / len) * MAX_DISTANCE,
+      });
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      // Ignore when typing in inputs/textareas
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      const key = e.key.toLowerCase();
+      const dir = KEY_DIR[key];
+      if (!dir) return;
+      e.preventDefault();
+      if (!pressed.has(dir)) {
+        pressed.add(dir);
+        update();
+      }
+    };
+    const onKeyUp = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+      const dir = KEY_DIR[key];
+      if (!dir) return;
+      if (pressed.delete(dir)) update();
+    };
+    const onBlur = () => {
+      if (pressed.size > 0) {
+        pressed.clear();
+        setDragging(false);
+        setHandlePos({ x: 0, y: 0 });
+        onRelease();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener('keyup', onKeyUp);
+    window.addEventListener('blur', onBlur);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
+      window.removeEventListener('blur', onBlur);
+    };
+  }, [onMove, onRelease]);
+
   // Direction arrows around the pad
   const arrows = [
     { deg: 0, label: '東', x: PAD_RADIUS + 20, y: 0 },
@@ -211,7 +299,7 @@ const JoystickPad: React.FC<JoystickPadProps> = ({
             {getDirectionLabel(direction)} | {(intensity * 100).toFixed(0)}%
           </>
         ) : (
-          '拖曳以移動'
+          '拖曳或按 WASD / 方向鍵'
         )}
       </div>
     </div>

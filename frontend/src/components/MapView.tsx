@@ -381,8 +381,8 @@ const MapView: React.FC<MapViewProps> = ({
         title="定位到目前位置"
         style={{
           position: 'absolute',
-          right: 16,
-          bottom: 96,
+          left: 16,
+          bottom: 24,
           zIndex: 800,
           width: 40,
           height: 40,
