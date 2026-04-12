@@ -436,6 +436,17 @@ async def wifi_tunnel_stop():
     if info_path.exists():
         info_path.unlink()
 
+    # Try to fall back to USB if a device is still plugged in
+    try:
+        devices = await dm.discover_devices()
+        usb_dev = next((d for d in devices if d.connection_type != "Network"), None)
+        if usb_dev:
+            await dm.connect(usb_dev.udid)
+            await app_state.create_engine_for_device(usb_dev.udid)
+            _tunnel_logger.info("Switched back to USB connection: %s", usb_dev.udid)
+    except Exception:
+        _tunnel_logger.exception("USB fallback after tunnel stop failed")
+
     return {"status": "stopped"}
 
 

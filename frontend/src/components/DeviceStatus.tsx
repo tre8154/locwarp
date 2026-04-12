@@ -38,7 +38,7 @@ const DeviceStatus: React.FC<DeviceStatusProps> = ({
   onWifiConnect,
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [tunnelIp, setTunnelIp] = useState(() => localStorage.getItem('locwarp.tunnel.ip') || '192.168.0.205');
+  const [tunnelIp, setTunnelIp] = useState(() => localStorage.getItem('locwarp.tunnel.ip') || '');
   const [tunnelPort, setTunnelPort] = useState(() => localStorage.getItem('locwarp.tunnel.port') || '49152');
   const [tunnelConnecting, setTunnelConnecting] = useState(false);
   const [tunnelError, setTunnelError] = useState<string | null>(null);
