@@ -195,9 +195,9 @@ class RandomWalkHandler:
             pause_duration = random.uniform(min_pause, max_pause)
             logger.info("Random walk pausing for %.1fs before next leg", pause_duration)
 
-            await engine._emit("random_walk_pause", {
+            await engine._emit("pause_countdown", {
                 "duration_seconds": pause_duration,
-                "count": walk_count,
+                "source": "random_walk",
             })
 
             try:
@@ -211,7 +211,7 @@ class RandomWalkHandler:
                 # Normal timeout -- continue to next random destination
                 pass
 
-            await engine._emit("random_walk_pause_end", {"count": walk_count})
+            await engine._emit("pause_countdown_end", {"source": "random_walk"})
 
         # Ensure state returns to IDLE when random walk ends
         if engine.state in (SimulationState.RANDOM_WALK, SimulationState.PAUSED):

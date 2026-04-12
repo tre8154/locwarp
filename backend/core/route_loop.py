@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import asyncio
 import logging
+import random
 
 from models.schemas import Coordinate, MovementMode, SimulationState
 from config import resolve_speed_profile
@@ -92,6 +94,20 @@ class RouteLooper:
             engine.lap_count += 1
             await engine._emit("lap_complete", {"lap": engine.lap_count})
             logger.info("Loop lap %d complete", engine.lap_count)
+
+            # Random 5~20s pause between laps for realism
+            lap_pause = random.uniform(5.0, 20.0)
+            logger.info("Loop: pausing %.1fs before next lap", lap_pause)
+            await engine._emit("pause_countdown", {
+                "duration_seconds": lap_pause,
+                "source": "loop",
+            })
+            try:
+                await asyncio.wait_for(engine._stop_event.wait(), timeout=lap_pause)
+                break
+            except asyncio.TimeoutError:
+                pass
+            await engine._emit("pause_countdown_end", {"source": "loop"})
 
         if engine.state == SimulationState.LOOPING:
             engine.state = SimulationState.IDLE

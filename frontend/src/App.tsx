@@ -190,7 +190,7 @@ const App: React.FC = () => {
     if (sim.mode === SimMode.Loop) {
       sim.startLoop(route)
     } else if (sim.mode === SimMode.MultiStop) {
-      sim.multiStop(route, 10, false)
+      sim.multiStop(route, 0, false)
     }
   }, [sim])
 
@@ -435,7 +435,7 @@ const App: React.FC = () => {
               <rect x="6" y="4" width="4" height="16" rx="1" />
               <rect x="14" y="4" width="4" height="16" rx="1" />
             </svg>
-            隨機漫步暫停中 · 剩餘 {sim.pauseRemaining}s
+            到點暫停中 · 剩餘 {sim.pauseRemaining}s
           </div>
         )}
         <MapView

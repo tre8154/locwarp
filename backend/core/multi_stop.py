@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import random
 
 from models.schemas import Coordinate, MovementMode, SimulationState
 from config import resolve_speed_profile
@@ -147,23 +148,31 @@ class MultiStopNavigator:
                     "lng": wp_b.lng,
                 })
 
-                # Pause at the stop if duration > 0 and not the last stop
-                # (or if looping, always pause)
+                # Pause at the stop. If caller provided stop_duration, use it;
+                # otherwise default to a random 5~20s pause for realism.
+                # Last stop only pauses when looping.
                 is_last = i == len(waypoints) - 2
-                should_pause = stop_duration > 0 and (not is_last or loop)
+                if stop_duration and stop_duration > 0:
+                    this_pause = float(stop_duration)
+                else:
+                    this_pause = random.uniform(5.0, 20.0)
+                should_pause = this_pause > 0 and (not is_last or loop)
 
                 if should_pause:
-                    logger.debug("Pausing at stop %d for %ds", i + 1, stop_duration)
+                    logger.info("Multi-stop: pausing %.1fs at stop %d", this_pause, i + 1)
+                    await engine._emit("pause_countdown", {
+                        "duration_seconds": this_pause,
+                        "source": "multi_stop",
+                    })
                     try:
                         await asyncio.wait_for(
                             engine._stop_event.wait(),
-                            timeout=stop_duration,
+                            timeout=this_pause,
                         )
-                        # If we get here, stop was requested during the pause
                         break
                     except asyncio.TimeoutError:
-                        # Normal timeout -- continue to next leg
                         pass
+                    await engine._emit("pause_countdown_end", {"source": "multi_stop"})
 
             if not loop or engine._stop_event.is_set():
                 running = False

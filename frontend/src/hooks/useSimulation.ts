@@ -126,6 +126,7 @@ export function useSimulation(wsMessage: WsMessage | null) {
         setPauseEndAt(null)
         break
       }
+      case 'pause_countdown':
       case 'random_walk_pause': {
         const dur = wsMessage.data?.duration_seconds
         if (typeof dur === 'number' && dur > 0) {
@@ -133,6 +134,7 @@ export function useSimulation(wsMessage: WsMessage | null) {
         }
         break
       }
+      case 'pause_countdown_end':
       case 'random_walk_pause_end': {
         setPauseEndAt(null)
         break
