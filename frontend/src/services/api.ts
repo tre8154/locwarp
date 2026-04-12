@@ -26,6 +26,7 @@ const ERROR_I18N: Record<string, string> = {
   no_device: '尚未連接任何 iOS 裝置,請先透過 USB 連線',
   no_position: '尚未取得目前位置,請先跳點到一個座標',
   tunnel_lost: 'WiFi Tunnel 連線中斷,請重新建立',
+  cooldown_active: '冷卻中,請等待後再跳點',
 }
 
 function formatError(detail: unknown, fallback: string): string {

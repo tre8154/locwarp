@@ -25,7 +25,6 @@ export interface LatLng {
 export interface SimulationStatus {
   running: boolean
   paused: boolean
-  mode: SimMode | null
   speed: number
   state?: string
   distance_remaining?: number
@@ -38,7 +37,6 @@ export function useSimulation(wsMessage: WsMessage | null) {
   const [status, setStatus] = useState<SimulationStatus>({
     running: false,
     paused: false,
-    mode: null,
     speed: 0,
   })
   const [currentPosition, setCurrentPosition] = useState<LatLng | null>(null)
@@ -106,7 +104,6 @@ export function useSimulation(wsMessage: WsMessage | null) {
         setStatus({
           running: !!d.running,
           paused: !!d.paused,
-          mode: d.mode ?? null,
           speed: d.speed ?? 0,
           state: d.state,
           distance_remaining: d.distance_remaining,
@@ -195,7 +192,7 @@ export function useSimulation(wsMessage: WsMessage | null) {
         setDestination({ lat, lng })
         setProgress(0)
         const res = await api.navigate(lat, lng, moveMode, { speed_kmh: customSpeedKmh, speed_min_kmh: speedMinKmh, speed_max_kmh: speedMaxKmh })
-        setStatus((prev) => ({ ...prev, running: true, paused: false, mode: SimMode.Navigate }))
+        setStatus((prev) => ({ ...prev, running: true, paused: false }))
         return res
       } catch (err: any) {
         setError(err.message)
@@ -213,7 +210,7 @@ export function useSimulation(wsMessage: WsMessage | null) {
         setWaypoints(wps)
         setProgress(0)
         const res = await api.startLoop(wps, moveMode, { speed_kmh: customSpeedKmh, speed_min_kmh: speedMinKmh, speed_max_kmh: speedMaxKmh })
-        setStatus((prev) => ({ ...prev, running: true, paused: false, mode: SimMode.Loop }))
+        setStatus((prev) => ({ ...prev, running: true, paused: false }))
         return res
       } catch (err: any) {
         setError(err.message)
@@ -231,7 +228,7 @@ export function useSimulation(wsMessage: WsMessage | null) {
         setWaypoints(wps)
         setProgress(0)
         const res = await api.multiStop(wps, moveMode, stopDuration, loop, { speed_kmh: customSpeedKmh, speed_min_kmh: speedMinKmh, speed_max_kmh: speedMaxKmh })
-        setStatus((prev) => ({ ...prev, running: true, paused: false, mode: SimMode.MultiStop }))
+        setStatus((prev) => ({ ...prev, running: true, paused: false }))
         return res
       } catch (err: any) {
         setError(err.message)
@@ -248,7 +245,7 @@ export function useSimulation(wsMessage: WsMessage | null) {
         setMode(SimMode.RandomWalk)
         setProgress(0)
         const res = await api.randomWalk(center, radiusM, moveMode, { speed_kmh: customSpeedKmh, speed_min_kmh: speedMinKmh, speed_max_kmh: speedMaxKmh })
-        setStatus((prev) => ({ ...prev, running: true, paused: false, mode: SimMode.RandomWalk }))
+        setStatus((prev) => ({ ...prev, running: true, paused: false }))
         return res
       } catch (err: any) {
         setError(err.message)
@@ -263,7 +260,7 @@ export function useSimulation(wsMessage: WsMessage | null) {
     try {
       setMode(SimMode.Joystick)
       const res = await api.joystickStart(moveMode)
-      setStatus((prev) => ({ ...prev, running: true, paused: false, mode: SimMode.Joystick }))
+      setStatus((prev) => ({ ...prev, running: true, paused: false }))
       return res
     } catch (err: any) {
       setError(err.message)
@@ -276,7 +273,7 @@ export function useSimulation(wsMessage: WsMessage | null) {
     try {
       const res = await api.joystickStop()
       setMode(null)
-      setStatus((prev) => ({ ...prev, running: false, paused: false, mode: null }))
+      setStatus((prev) => ({ ...prev, running: false, paused: false }))
       return res
     } catch (err: any) {
       setError(err.message)
@@ -340,7 +337,6 @@ export function useSimulation(wsMessage: WsMessage | null) {
         setStatus({
           running: !!res.running,
           paused: !!res.paused,
-          mode: res.mode ?? null,
           speed: res.speed ?? 0,
         })
       }

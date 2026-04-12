@@ -432,8 +432,29 @@ class SimulationEngine:
             # Add GPS jitter for realism
             jittered_lat, jittered_lng = RouteInterpolator.add_jitter(lat, lng, jitter)
 
-            # Push position to device
-            await self._set_position(jittered_lat, jittered_lng)
+            # Push position to device, with limited retry on transient
+            # connection errors (USB jiggle, WiFi blip, screen-lock dip).
+            # After max retries on the same point, give up cleanly so the
+            # handler can run its finally-cleanup.
+            pushed = False
+            for attempt in range(3):
+                try:
+                    await self._set_position(jittered_lat, jittered_lng)
+                    pushed = True
+                    break
+                except (ConnectionError, OSError) as exc:
+                    logger.warning(
+                        "position push failed (attempt %d/3): %s", attempt + 1, exc,
+                    )
+                    await asyncio.sleep(0.5 * (attempt + 1))
+                except asyncio.CancelledError:
+                    raise
+                except Exception:
+                    logger.exception("Unexpected error pushing position")
+                    break
+            if not pushed:
+                logger.error("Giving up on this route after repeated push failures")
+                break
 
             # Update tracking
             self.distance_traveled += step_dist

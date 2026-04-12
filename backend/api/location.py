@@ -42,9 +42,23 @@ async def teleport(req: TeleportRequest):
     engine = _engine()
     cooldown = _cooldown()
 
+    # Enforce cooldown server-side: if enabled and currently active,
+    # refuse the teleport so API clients cannot bypass the UI guard.
+    if cooldown.enabled and cooldown.is_active and cooldown.remaining > 0:
+        raise HTTPException(
+            status_code=429,
+            detail={
+                "code": "cooldown_active",
+                "message": f"冷卻中,還需等待 {int(cooldown.remaining)} 秒",
+                "remaining_seconds": cooldown.remaining,
+            },
+        )
+
     old_pos = engine.current_position
     try:
         await engine.teleport(req.lat, req.lng)
+    except HTTPException:
+        raise
     except Exception as e:
         import traceback, logging
         logging.getLogger("locwarp").error("Teleport failed:\n%s", traceback.format_exc())

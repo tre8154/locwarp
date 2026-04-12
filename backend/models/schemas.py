@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field
 
 
 class Coordinate(BaseModel):
-    lat: float
-    lng: float
+    lat: float = Field(ge=-90.0, le=90.0, description="Latitude in degrees")
+    lng: float = Field(ge=-180.0, le=180.0, description="Longitude in degrees")
 
 
 class SimulationState(str, Enum):
@@ -45,13 +45,13 @@ class DeviceInfo(BaseModel):
 
 # ── Location requests ────────────────────────────────────
 class TeleportRequest(BaseModel):
-    lat: float
-    lng: float
+    lat: float = Field(ge=-90.0, le=90.0)
+    lng: float = Field(ge=-180.0, le=180.0)
 
 
 class NavigateRequest(BaseModel):
-    lat: float
-    lng: float
+    lat: float = Field(ge=-90.0, le=90.0)
+    lng: float = Field(ge=-180.0, le=180.0)
     mode: MovementMode = MovementMode.WALKING
     speed_kmh: float | None = None
     speed_min_kmh: float | None = None
