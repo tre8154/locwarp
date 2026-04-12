@@ -259,6 +259,7 @@ const App: React.FC = () => {
           onScan={device.scan}
           onSelect={(id: string) => device.connect(id)}
           onStartWifiTunnel={device.startWifiTunnel}
+          onWifiConnect={device.connectWifi}
           onStopTunnel={device.stopTunnel}
           tunnelStatus={device.tunnelStatus}
         />
