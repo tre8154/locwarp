@@ -2,46 +2,9 @@
 
 **iOS 虛擬定位模擬器**, 在 Windows 上控制 iPhone 的 GPS 定位,支援直接跳點、導航、路線循環、多點停留、隨機漫步、搖桿操作等模擬模式,可經由 USB 或 WiFi 連線。
 
-<p align="right">
-  <a href="README.md"><img alt="繁體中文" src="https://img.shields.io/badge/繁體中文-active-2d3748?style=flat-square"></a>
-  <a href="README.en.md"><img alt="English" src="https://img.shields.io/badge/English-gray?style=flat-square"></a>
-</p>
-
-<p align="center">
-  <a href="https://ko-fi.com/haoooooo" target="_blank">
-    <img src="https://img.shields.io/badge/Ko--fi-請我喝咖啡-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi" height="40">
-  </a>
-  &nbsp;&nbsp;
-  <a href="https://lin.ee/UwdCrmf" target="_blank">
-    <img src="https://img.shields.io/badge/LINE-加我好友-06C755?style=for-the-badge&logo=line&logoColor=white" alt="LINE" height="40">
-  </a>
-  &nbsp;&nbsp;
-  <a href="#usdt-斗內-trc-20--tron-鏈" target="_blank">
-    <img src="https://img.shields.io/badge/USDT-TRC--20-26A17B?style=for-the-badge&logo=tether&logoColor=white" alt="USDT" height="40">
-  </a>
-</p>
-
-> 如果 LocWarp 有幫到你, 歡迎[請我喝杯咖啡](https://ko-fi.com/haoooooo)支持 ☕  
-> 沒有 PayPal 想要支持的話, 也可以[加 LINE](https://lin.ee/UwdCrmf) 跟我聯絡, 或用下方 USDT 地址直接斗內。
-
-### USDT 斗內 (TRC-20 / TRON 鏈)
-
-**錢包地址**
-
-```
-TB1i7pEcifAeh8oDLLZFqiRVrpUaZmmDAn
-```
-
-**僅支援 TRC-20 (TRON 鏈)**
-
-<p>
-  <img src="docs/donate-usdt-tron-qr.png" alt="USDT TRC-20 QR" width="260">
-</p>
-
-
 > ### 專案性質聲明
 >
-> LocWarp 為個人獨立維護之開源專案,非商業產品,亦無專職團隊。開發者將盡力於合理時間內新增功能、回應 Issue、修復 Bug 並隨 iOS / pymobiledevice3 版本演進持續更新,然:
+> LocWarp 為社群維護之開源專案,非商業產品,亦無專職團隊。開發者將盡力於合理時間內新增功能、回應 Issue、修復 Bug 並隨 iOS / pymobiledevice3 版本演進持續更新,然:
 >
 > - 本專案僅保證**於開發者本人測試環境**(目前為 iPhone 16 Pro Max / iOS 26.4.1 + Windows 11 專業版)下運作正常;
 > - **不保證於其他裝置、iOS 修補版本、網路環境、系統配置下皆能穩定使用**;
