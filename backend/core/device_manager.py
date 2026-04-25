@@ -41,11 +41,11 @@ from services.location_service import (
 
 class UnsupportedIosVersionError(RuntimeError):
     """Raised when a connecting device's iOS version is below the minimum
-    supported by LocWarp (currently 16.0). Surfaces a structured error to
+    supported by LocWarp (currently 15.0). Surfaces a structured error to
     the API layer so the frontend can show an actionable message rather
     than a stack trace."""
 
-    MIN_VERSION = "16.0"
+    MIN_VERSION = "15.0"
 
     def __init__(self, version: str) -> None:
         self.version = version
@@ -205,7 +205,7 @@ class DeviceManager:
         ios_version_str: str = lockdown.all_values.get("ProductVersion", "0.0")
         ver = _parse_ios_version(ios_version_str)
 
-        if ver < (16, 0):
+        if ver < (15, 0):
             logger.warning(
                 "Refusing connect: %s reports iOS %s, below minimum %s",
                 udid, ios_version_str, UnsupportedIosVersionError.MIN_VERSION,
