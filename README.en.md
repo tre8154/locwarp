@@ -13,9 +13,9 @@
 
 > ### System Requirements
 >
-> **Starting with v0.1.49, LocWarp only supports iOS / iPadOS 17 and later.**
+> **Starting with v0.1.49, WiFi Tunnel in LocWarp only supports iOS / iPadOS 17 and later.**
 >
-> iOS 17+ is the primary supported range (developer-tested). **iOS 16.x is community-maintained by @bitifyChen (#9) starting from v0.2.5**, via the LegacyLocationService path; the effective minimum is iOS 16.0. iOS 15 and below remain unsupported.
+> iOS 17+ is the primary supported range (developer-tested). **iOS 16.x is community-maintained by @bitifyChen (#9) starting from v0.2.5**, via the LegacyLocationService path; the effective minimum is iOS 15.0. iOS 14 and below remain unsupported.
 
 > ### Compatibility Status
 >
