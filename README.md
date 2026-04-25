@@ -13,9 +13,9 @@
 
 > ### 系統需求
 >
-> **LocWarp 自 v0.1.49 起僅支援 iOS / iPadOS 17 以上的裝置。**
+> **LocWarp 自 v0.1.49 起 WiFi Tunnel 僅支援 iOS / iPadOS 17 以上的裝置。**
 >
-> iOS 17+ 為主要支援版本(開發者日常測試);**iOS 16.x 自 v0.2.5 起由 @bitifyChen (#9) 社群維護**,走 LegacyLocationService 路徑,最低門檻為 iOS 16.0。iOS 15 以下不受支援。
+> iOS 17+ 為主要支援版本(開發者日常測試);**iOS 16.x 自 v0.2.5 起由 @bitifyChen (#9) 社群維護**,走 LegacyLocationService 路徑,最低門檻為 iOS 15.0。iOS 14 以下不受支援。
 
 > ### 相容性測試狀態
 >
