@@ -318,11 +318,11 @@ const DeviceStatus: React.FC<DeviceStatusProps> = ({
               }}
             >
               {devices.map((d) => {
-                // iOS 16 is supported again. Keep only truly older devices
+                // iOS 15 is supported again. Keep only truly older devices
                 // disabled so users don't waste a click waiting for the
                 // backend to reject the connect.
                 const major = parseInt((d.iosVersion || '0').split('.')[0], 10) || 0;
-                const unsupported = major > 0 && major < 16;
+                const unsupported = major > 0 && major < 15;
                 return (
                 <div
                   key={d.id}
