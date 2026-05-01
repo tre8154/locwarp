@@ -7,34 +7,6 @@
   <a href="README.en.md"><img alt="English" src="https://img.shields.io/badge/English-gray?style=flat-square"></a>
 </p>
 
-<p align="center">
-  <a href="https://lin.ee/UwdCrmf" target="_blank">
-    <img src="https://img.shields.io/badge/LINE-加我好友-06C755?style=for-the-badge&logo=line&logoColor=white" alt="LINE" height="40">
-  </a>
-  &nbsp;&nbsp;
-  <a href="#usdt-斗內-trc-20--tron-鏈" target="_blank">
-    <img src="https://img.shields.io/badge/USDT-TRC--20-26A17B?style=for-the-badge&logo=tether&logoColor=white" alt="USDT" height="40">
-  </a>
-</p>
-
-> 有問題或想聯絡作者, 歡迎[加 LINE](https://lin.ee/UwdCrmf)。  
-> 想支持開發者, 可以用下方 USDT 地址直接斗內。
-
-### USDT 斗內 (TRC-20 / TRON 鏈)
-
-**錢包地址**
-
-```
-TB1i7pEcifAeh8oDLLZFqiRVrpUaZmmDAn
-```
-
-**僅支援 TRC-20 (TRON 鏈)**
-
-<p>
-  <img src="docs/donate-usdt-tron-qr.png" alt="USDT TRC-20 QR" width="260">
-</p>
-
-
 > ### 專案性質聲明
 >
 > LocWarp 為個人獨立維護之開源專案,非商業產品,亦無專職團隊。開發者將盡力於合理時間內新增功能、回應 Issue、修復 Bug 並隨 iOS / pymobiledevice3 版本演進持續更新,然:
