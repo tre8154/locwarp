@@ -47,7 +47,7 @@ class UnsupportedIosVersionError(RuntimeError):
     the API layer so the frontend can show an actionable message rather
     than a stack trace."""
 
-    MIN_VERSION = "16.0"
+    MIN_VERSION = "15.0"
 
     def __init__(self, version: str) -> None:
         self.version = version
@@ -272,7 +272,7 @@ class DeviceManager:
         _remember_device_name(udid, device_name)
         ver = _parse_ios_version(ios_version_str)
 
-        if ver < (16, 0):
+        if ver < (15, 0):
             logger.warning(
                 "Refusing connect: %s reports iOS %s, below minimum %s",
                 udid, ios_version_str, UnsupportedIosVersionError.MIN_VERSION,
